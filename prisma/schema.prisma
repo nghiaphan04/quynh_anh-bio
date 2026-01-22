@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Profile {
+  id             Int      @id @default(autoincrement())
+  bio            String   @default("☀️Hana Yori Dango ( 1992 - 2004 )🍡\nLove Through A Prism\nlink đọc manga 241.1 chap bản Eng ⬇️")
+  followerCount  String   @default("3729")
+  followingCount String   @default("39")
+  heartCount     String   @default("331K")
+  videoLinks     String[] 
+  customLinks    Json?    @default("[]")
+  followLink     String   @default("https://www.tiktok.com/@hanadan_yoko?lang=vi-VN")
+  messageLink    String   @default("https://www.tiktok.com/@hanadan_yoko?lang=vi-VN")
+  addFriendLink  String   @default("https://www.tiktok.com/@hanadan_yoko?lang=vi-VN")
+  shareLink      String   @default("https://www.tiktok.com/@hanadan_yoko?lang=vi-VN")
+  pinnedVideos   String[]
+  uniqueId       String   @default("hanadan_yoko")
+  username       String   @default("𐙚𝘵𝘴𝘶𝘵𝘴𝘶.𝘺𝘰𝘬𝘰⋆. ̊")
+  bioLink        String   @default("https://www.tiktok.com/link/v2?aid=1988&lang=vi-VN&scene=bio_url&target=https%3A%2F%2Fbato.si%2Ftitle%2F18679-hana-yori-dango")
+}
