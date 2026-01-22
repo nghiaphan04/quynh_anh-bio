@@ -1,14 +1,9 @@
 import { PrismaClient } from '@prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
 
+// Prisma 5 no longer supports the `adapter` option. The client reads the
+// DATABASE_URL environment variable automatically.
 const prismaClientSingleton = () => {
-  const adapter = new PrismaPg({
-    connectionString: process.env.DATABASE_URL,
-  });
-  
-  return new PrismaClient({
-    adapter,
-  });
+  return new PrismaClient();
 };
 
 declare global {
