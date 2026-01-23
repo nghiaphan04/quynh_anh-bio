@@ -20,7 +20,7 @@ export async function GET(request: Request) {
   const redirectUri = "https://quynh-anh-bio.vercel.app/api/tiktok/callback";
 
   try {
-    const response = await fetch('https://open.tiktokapis.com/v2/auth/access_token/', {
+    const response = await fetch('https://open.tiktokapis.com/v2/oauth/token/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
