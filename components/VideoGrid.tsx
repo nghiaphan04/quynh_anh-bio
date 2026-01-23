@@ -49,7 +49,7 @@ export default function VideoGrid({ videoLinks, pinnedVideos = [], rawVideos = [
         variants={container}
         initial="hidden"
         animate="show"
-        className="grid mt-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-1 md:gap-4"
+        className="grid mt-4 grid-cols-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-0.5"
       >
         {displayVideos.map((video, index) => {
           const isPinned = pinnedVideos?.includes(video.share_url);
@@ -60,7 +60,7 @@ export default function VideoGrid({ videoLinks, pinnedVideos = [], rawVideos = [
             <motion.div 
               key={video.id || index} 
               variants={item} 
-              className="relative aspect-[3/4] group overflow-hidden cursor-pointer bg-muted/30 border border-border/50 rounded-lg"
+              className="relative aspect-[3/4] group overflow-hidden cursor-pointer bg-muted/30 border border-border/50 rounded-sm"
               onClick={() => window.open(video.share_url, '_blank')}
             >
               {/* Cover Image */}
@@ -79,15 +79,15 @@ export default function VideoGrid({ videoLinks, pinnedVideos = [], rawVideos = [
 
               {/* Pinned Badge */}
               {isPinned && (
-                 <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-[#FE2C55] rounded-[2px] z-10">
-                   <span className="text-[11px] font-bold text-white leading-none">Đã ghim</span>
+                 <div className="absolute top-1 left-1 px-1 py-0.5 bg-[#FE2C55] rounded-[2px] z-10">
+                   <span className="text-[10px] font-bold text-white leading-none">Đã ghim</span>
                  </div>
               )}
 
               {/* View Count Overlay */}
-              <div className="absolute bottom-2 left-2 flex items-center gap-1 z-10 text-white drop-shadow-md">
-                <Play className="w-3.5 h-3.5 fill-white stroke-none" />
-                <span className="text-[13px] font-semibold">{formatViews(viewCount)}</span>
+              <div className="absolute bottom-1 left-1 flex items-center gap-0.5 z-10 text-white drop-shadow-md">
+                <Play className="w-4 h-4 fill-transparent " />
+                <span className="text-[15px] font-semibold ms-1">{formatViews(viewCount)}</span>
               </div>
 
               {/* Hover Darken Effect */}

@@ -75,7 +75,7 @@ export default async function Home() {
 
       {/* Main Content: Single Column */}
       <div className="flex-1 w-full min-h-screen">
-        <div className="max-w-4xl mx-auto pb-20">
+        <div className="max-w-6xl mx-auto pb-20">
           <ProfileHeader 
             bio={data.bio}
             followerCount={data.followerCount}

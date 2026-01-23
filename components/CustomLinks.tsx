@@ -16,25 +16,34 @@ export default function CustomLinks({ links }: CustomLinksProps) {
   if (!links || links.length === 0) return null;
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-md mx-auto p-2">
-      <h2 className="text-xl font-bold text-primary mb-2 text-center">My Links</h2>
-      <div className="space-y-3">
+    <div className="flex flex-col gap-4 w-full items-start p-2">
+      <div className="space-y-3 w-full">
         {links.map((link, index) => (
-          <motion.a
+          <motion.div
             key={index}
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
             initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: index * 0.1 }}
-            className="group flex items-center justify-between p-4 rounded-xl bg-card border border-border shadow-sm hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
+            className="group flex flex-col items-start pt-3 transition-all duration-300 w-full"
           >
-            <span className="font-medium text-foreground group-hover:text-primary transition-colors">
-              {link.label}
+      
+            <span className="font-medium text-foreground transition-colors text-base">
+              {index + 1}. {link.label}
             </span>
-            <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
-          </motion.a>
+            <div className="flex items-center gap-2">
+              
+              <a 
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-blue-500 underline mt-1  hover:text-blue-600 transition-colors break-all"
+              >
+                {link.url}
+              </a>
+            </div>
+            
+            
+          </motion.div>
         ))}
       </div>
     </div>

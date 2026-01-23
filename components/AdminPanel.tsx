@@ -198,15 +198,15 @@ export default function AdminPanel({ initialData, children }: Readonly<{ initial
         <DialogTitle className="sr-only">Admin Dashboard</DialogTitle>
         <Tabs defaultValue="sync" className="w-full mt-4">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="sync">TikTok Sync</TabsTrigger>
-            <TabsTrigger value="links">Custom Links</TabsTrigger>
+            <TabsTrigger value="sync">Đồng bộ TikTok</TabsTrigger>
+            <TabsTrigger value="links">Link truyện</TabsTrigger>
           </TabsList>
 
           <TabsContent value="sync" className="space-y-6 py-12 flex flex-col items-center justify-center">
             <div className="text-center space-y-2">
               <h3 className="text-lg font-semibold">Đồng bộ hóa TikTok</h3>
               <p className="text-sm text-muted-foreground max-w-[300px]">
-                Tự động cập nhật Bio, Tên hiển thị, Follower, Likes và Video từ tài khoản TikTok Sandbox của bạn.
+                Tự động cập nhật Bio, Tên hiển thị, Follower, Likes và Video từ tài khoản TikTok của bạn.
               </p>
             </div>
             
@@ -235,12 +235,12 @@ export default function AdminPanel({ initialData, children }: Readonly<{ initial
                 <Input 
                   value={newCustomLabel}
                   onChange={(e) => setNewCustomLabel(e.target.value)}
-                  placeholder="Nhãn (VD: Instagram)"
+                  placeholder="Nhãn (VD: Truyện connan full a-z)"
                 />
                 <Input 
                   value={newCustomUrl}
                   onChange={(e) => setNewCustomUrl(e.target.value)}
-                  placeholder="Đường dẫn (https://...)"
+                  placeholder="Đường dẫn (VD: https://truyenvn.com/truyen-connan-full-a-z)"
                 />
               </div>
               <Button onClick={addCustomLink} className="w-full gap-2">
@@ -258,7 +258,7 @@ export default function AdminPanel({ initialData, children }: Readonly<{ initial
                   <Button 
                     variant="ghost" 
                     size="icon" 
-                    className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:bg-destructive/10"
+                    className="h-6 w-6 transition-opacity text-destructive hover:bg-destructive/10"
                     onClick={() => removeCustomLink(i)}
                   >
                     <Trash2 className="w-3 h-3" />
@@ -271,14 +271,14 @@ export default function AdminPanel({ initialData, children }: Readonly<{ initial
                 </div>
               )}
             </div>
+
+            <div className="flex justify-end pt-4 border-t border-border mt-6">
+               <Button onClick={() => handleSave()} disabled={isSaving} className="w-full sm:w-auto gap-2">
+                 {isSaving ? "Đang lưu..." : <><Save className="w-4 h-4" /> Lưu Links</>}
+               </Button>
+             </div>
           </TabsContent>
         </Tabs>
-
-        <div className="flex justify-end pt-4 border-t border-border mt-6">
-          <Button onClick={() => handleSave()} disabled={isSaving} className="w-full sm:w-auto gap-2">
-            {isSaving ? "Đang lưu..." : <><Save className="w-4 h-4" /> Lưu Custom Links</>}
-          </Button>
-        </div>
       </DialogContent>
     </Dialog>
   );

@@ -49,35 +49,36 @@
 :root {
   --radius: 0.5rem;
 
-  /* Soft Pink Theme as Default */
-  --background: #fdf2f8;
-  --foreground: #831843;
+  /* Soft Pink Theme with Mixed Accents */
+  --background: #ffe4e6; /* Rose 100 - Slightly darker/warmer pink */
+  --foreground: #1e293b; /* Slate 800 - High contrast neutral */
 
   --card: #ffffff;
-  --card-foreground: #4a1d24;
+  --card-foreground: #1e293b;
 
   --popover: #ffffff;
-  --popover-foreground: #4a1d24;
+  --popover-foreground: #1e293b;
 
   /* Vibrant Pink Primary */
-  --primary: #ff8fa3;
+  --primary: #f1156d;
   --primary-foreground: #ffffff;
 
-  --secondary: #fce4ec;
-  --secondary-foreground: #d81b60;
+  /* Mixing with Soft Purple for Secondary Actions */
+  --secondary: #ffffff; /* White - Clean and soft */
+  --secondary-foreground: #1e293b; /* Dark Slate */
 
-  --muted: #fce4ec;
-  --muted-foreground: #880e4f;
+  --muted: #f8fafc; /* Slate 50 */
+  --muted-foreground: #64748b;
 
-  --accent: #fce4ec;
-  --accent-foreground: #d81b60;
+  --accent: #ffffff; 
+  --accent-foreground: #1e293b;
 
-  --destructive: #c2185b;
-  --destructive-foreground: #fce4ec;
+  --destructive: #be123c;
+  --destructive-foreground: #ffe4e9;
 
-  --border: #f8bbd0;
-  --input: #f8bbd0;
-  --ring: #ff8fa3;
+  --border: #e2e8f0; /* Slate 200 - Neutral border */
+  --input: #e2e8f0;
+  --ring: #f1156d;
 
   --chart-1: #ff8fa3;
   --chart-2: #f48fb1;
