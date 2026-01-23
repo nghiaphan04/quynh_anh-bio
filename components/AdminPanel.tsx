@@ -116,6 +116,9 @@ export default function AdminPanel({ initialData }: Readonly<{ initialData?: Pro
           const res = await fetch('/api/tiktok/user');
           const tiktokData = await res.json();
           console.log("TikTok Data from API:", tiktokData);
+          if (tiktokData.rawVideos) {
+            console.log("Detailed TikTok Videos:", tiktokData.rawVideos);
+          }
           
           if (tiktokData.error) {
             toast.error("Lỗi lấy dữ liệu: " + tiktokData.error);

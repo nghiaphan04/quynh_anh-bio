@@ -12,8 +12,24 @@ export async function GET() {
 
   try {
     // 1. Fetch User Profile Info
-    const fields = 'open_id,union_id,avatar_url,display_name,bio_description,follower_count,following_count,likes_count';
-    const profileResponse = await fetch(`https://open.tiktokapis.com/v2/user/info/?fields=${fields}`, {
+    const profileFields = [
+      'open_id',
+      'union_id',
+      'avatar_url',
+      'avatar_url_100',
+      'avatar_large_url',
+      'display_name',
+      'bio_description',
+      'profile_deep_link',
+      'is_verified',
+      'username',
+      'follower_count',
+      'following_count',
+      'likes_count',
+      'video_count'
+    ].join(',');
+    
+    const profileResponse = await fetch(`https://open.tiktokapis.com/v2/user/info/?fields=${profileFields}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
       },
@@ -36,8 +52,10 @@ export async function GET() {
 
     // 2. Fetch Video List
     let videoLinks: string[] = [];
+    let detailedVideos: any[] = [];
     try {
-      const videoResponse = await fetch('https://open.tiktokapis.com/v2/video/list/?fields=share_url', {
+      const videoFields = 'id,create_time,cover_image_url,share_url,video_description,duration,title,view_count,like_count';
+      const videoResponse = await fetch(`https://open.tiktokapis.com/v2/video/list/?fields=${videoFields}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
@@ -53,7 +71,9 @@ export async function GET() {
 
       const videoData = JSON.parse(videoText);
       if (videoData.data && videoData.data.videos) {
-        videoLinks = videoData.data.videos.map((v: any) => v.share_url).filter(Boolean);
+        detailedVideos = videoData.data.videos;
+        console.log("Detailed Videos Data:", JSON.stringify(detailedVideos, null, 2));
+        videoLinks = detailedVideos.map((v: any) => v.share_url).filter(Boolean);
       }
     } catch (error) {
       console.error("Failed to fetch TikTok videos:", error);
@@ -68,7 +88,8 @@ export async function GET() {
         followerCount: formatCount(user.follower_count),
         followingCount: formatCount(user.following_count),
         heartCount: formatCount(user.likes_count),
-        videoLinks: videoLinks
+        videoLinks: videoLinks,
+        rawVideos: detailedVideos // Including raw data in the response for the user to see in logs
       };
       
       console.log("Final Merged TikTok Data:", JSON.stringify(finalData, null, 2));
