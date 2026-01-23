@@ -49,74 +49,73 @@
 :root {
   --radius: 0.5rem;
 
-  /* Deep Dark Theme as Default since user requested specific aesthetic */
-  --background: #121212;
-  --foreground: #ffffff;
+  /* Soft Pink Theme as Default */
+  --background: #fff5f7;
+  --foreground: #4a1d24;
 
-  --card: #1e1e1e;
-  --card-foreground: #ffffff;
+  --card: #ffffff;
+  --card-foreground: #4a1d24;
 
-  --popover: #1e1e1e;
-  --popover-foreground: #ffffff;
+  --popover: #ffffff;
+  --popover-foreground: #4a1d24;
 
-  /* Soft Pink Primary */
-  --primary: #f4a9bc;
-  --primary-foreground: #121212;
+  /* Vibrant Pink Primary */
+  --primary: #ff8fa3;
+  --primary-foreground: #ffffff;
 
-  --secondary: #27272a;
-  --secondary-foreground: #f4a9bc;
+  --secondary: #fce4ec;
+  --secondary-foreground: #d81b60;
 
-  --muted: #27272a;
-  --muted-foreground: #a1a1aa;
+  --muted: #fce4ec;
+  --muted-foreground: #880e4f;
 
-  --accent: #27272a;
-  --accent-foreground: #f4a9bc;
+  --accent: #fce4ec;
+  --accent-foreground: #d81b60;
 
-  --destructive: #7f1d1d;
-  --destructive-foreground: #fef2f2;
+  --destructive: #c2185b;
+  --destructive-foreground: #fce4ec;
 
-  --border: #27272a;
-  --input: #27272a;
-  --ring: #f4a9bc;
+  --border: #f8bbd0;
+  --input: #f8bbd0;
+  --ring: #ff8fa3;
 
-  --chart-1: #f4a9bc;
-  --chart-2: #2a9d8f;
-  --chart-3: #e9c46a;
-  --chart-4: #f4a261;
-  --chart-5: #e76f51;
+  --chart-1: #ff8fa3;
+  --chart-2: #f48fb1;
+  --chart-3: #f06292;
+  --chart-4: #ec407a;
+  --chart-5: #e91e63;
 
-  --sidebar: #121212;
-  --sidebar-foreground: #f4a9bc;
-  --sidebar-primary: #f4a9bc;
-  --sidebar-primary-foreground: #121212;
-  --sidebar-accent: #27272a;
-  --sidebar-accent-foreground: #f4a9bc;
-  --sidebar-border: #27272a;
-  --sidebar-ring: #f4a9bc;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #ad1457;
+  --sidebar-primary: #ff8fa3;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #fce4ec;
+  --sidebar-accent-foreground: #d81b60;
+  --sidebar-border: #f8bbd0;
+  --sidebar-ring: #ff8fa3;
 }
 
-/* Force dark mode styles everywhere for consistency with the requested theme */
+/* Pink Dark Aesthetic */
 .dark {
-  /* TikTok Dark Aesthetic */
-  --background: #121212;
-  --foreground: #ffffff;
-  --card: #121212;
-  --card-foreground: #ffffff;
-  --popover: #1e1e1e;
-  --popover-foreground: #ffffff;
-  --primary: #FE2C55; /* TikTok Red */
-  --primary-foreground: #ffffff;
-  --secondary: #25F4EE; /* TikTok Cyan */
-  --secondary-foreground: #121212;
-  --muted: #2f2f2f;
-  --muted-foreground: #a1a1aa;
-  --accent: #2f2f2f;
-  --accent-foreground: #ffffff;
+  --background: #2d0a10;
+  --foreground: #ffebee;
+  --card: #3d0e16;
+  --card-foreground: #ffebee;
+  --popover: #3d0e16;
+  --popover-foreground: #ffebee;
+  --primary: #ff8fa3;
+  --primary-foreground: #2d0a10;
+  --secondary: #4d141e;
+  --secondary-foreground: #ff8fa3;
+  --muted: #4d141e;
+  --muted-foreground: #f48fb1;
+  --accent: #4d141e;
+  --accent-foreground: #ffebee;
   --destructive: #ff3b5c;
   --destructive-foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.12);
-  --input: #2f2f2f;
-  --ring: #FE2C55;
+  --border: rgba(255, 143, 163, 0.2);
+  --input: #4d141e;
+  --ring: #ff8fa3;
 }
 
 @layer base {
