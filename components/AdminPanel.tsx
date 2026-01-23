@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
-import { Plus, Trash2, Settings, Link as LinkIcon, Save } from "lucide-react";
+import { Plus, Trash2, Settings, Link as LinkIcon, Save, RefreshCw } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 
@@ -92,6 +92,55 @@ export default function AdminPanel({ initialData }: Readonly<{ initialData?: Pro
     }
   };
 
+  const syncFromTikTok = () => {
+    const clientKey = "sbawjkr6yntwtr4ljy"; // Keeping it secure via env is better but for sandbox test this is fine or we can use another route to get the auth URL
+    const redirectUri = encodeURIComponent("https://quynh-anh-bio.vercel.app/api/tiktok/callback");
+    const scope = "user.info.basic,user.info.profile,user.info.stats";
+    const state = Math.random().toString(36).substring(7);
+    
+    const authUrl = `https://www.tiktok.com/v2/auth/authorize/?client_key=${clientKey}&scope=${scope}&response_type=code&redirect_uri=${redirectUri}&state=${state}`;
+    
+    const width = 600;
+    const height = 700;
+    const left = window.screenX + (window.outerWidth - width) / 2;
+    const top = window.screenY + (window.outerHeight - height) / 2;
+    
+    const popup = window.open(authUrl, 'TikTok Login', `width=${width},height=${height},left=${left},top=${top}`);
+
+    const handleMessage = async (event: MessageEvent) => {
+      if (event.data.type === 'TIKTOK_AUTH_SUCCESS') {
+        window.removeEventListener('message', handleMessage);
+        toast.info("Đã xác thực, đang lấy dữ liệu...");
+        
+        try {
+          const res = await fetch('/api/tiktok/user');
+          const tiktokData = await res.json();
+          console.log("TikTok Data from API:", tiktokData);
+          
+          if (tiktokData.error) {
+            toast.error("Lỗi lấy dữ liệu: " + tiktokData.error);
+            return;
+          }
+
+          setData(prev => ({
+            ...prev,
+            username: tiktokData.username || prev.username,
+            bio: tiktokData.bio || prev.bio,
+            followerCount: tiktokData.followerCount || prev.followerCount,
+            followingCount: tiktokData.followingCount || prev.followingCount,
+            heartCount: tiktokData.heartCount || prev.heartCount,
+          }));
+          
+          toast.success("Đã đồng bộ dữ liệu từ TikTok!");
+        } catch (err) {
+          toast.error("Lỗi đồng bộ dữ liệu");
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+  };
+
   const addVideo = () => {
     if (newLink) {
       setData(prev => ({ ...prev, videoLinks: [...prev.videoLinks, newLink] }));
@@ -168,6 +217,17 @@ export default function AdminPanel({ initialData }: Readonly<{ initialData?: Pro
           </TabsList>
 
           <TabsContent value="info" className="space-y-6 py-4">
+            <div className="flex justify-between items-center mb-2">
+                <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="gap-2 text-primary border-primary/20 hover:bg-primary/10"
+                    onClick={syncFromTikTok}
+                >
+                    <RefreshCw className="w-4 h-4" />
+                    Đồng bộ từ TikTok Sandbox
+                </Button>
+            </div>
             {/* Info and Identity */}
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
