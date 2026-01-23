@@ -17,8 +17,20 @@ export async function GET() {
       },
     });
 
-    const data = await response.json();
-    console.log("TikTok User Info Response:", JSON.stringify(data, null, 2));
+    const text = await response.text();
+    console.log("TikTok User Info Raw Response:", text);
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      console.error("Failed to parse TikTok user info as JSON:", text);
+      return NextResponse.json({ 
+        error: 'TikTok API returned non-JSON response', 
+        details: text.substring(0, 200),
+        status: response.status 
+      }, { status: 500 });
+    }
 
     if (data.data && data.data.user) {
       const user = data.data.user;

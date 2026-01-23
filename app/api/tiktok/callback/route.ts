@@ -34,8 +34,20 @@ export async function GET(request: Request) {
       }),
     });
 
-    const data = await response.json();
-    console.log("TikTok Token Exchange Response:", JSON.stringify(data, null, 2));
+    const text = await response.text();
+    console.log("TikTok Token Exchange Raw Response:", text);
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      console.error("Failed to parse TikTok response as JSON:", text);
+      return NextResponse.json({ 
+        error: 'TikTok API returned non-JSON response', 
+        details: text.substring(0, 200),
+        status: response.status 
+      }, { status: 500 });
+    }
 
     if (data.access_token) {
       // Store token in a cookie for the session
