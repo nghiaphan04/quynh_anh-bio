@@ -40,7 +40,7 @@ export async function GET(request: Request) {
     let data;
     try {
       data = JSON.parse(text);
-    } catch (e) {
+    } catch (_e) {
       console.error("Failed to parse TikTok response as JSON:", text);
       return NextResponse.json({ 
         error: 'TikTok API returned non-JSON response', 

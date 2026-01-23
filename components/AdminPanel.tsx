@@ -95,7 +95,7 @@ export default function AdminPanel({ initialData }: Readonly<{ initialData?: Pro
   const syncFromTikTok = () => {
     const clientKey = "sbawjkr6yntwtr4ljy"; // Keeping it secure via env is better but for sandbox test this is fine or we can use another route to get the auth URL
     const redirectUri = encodeURIComponent("https://quynh-anh-bio.vercel.app/api/tiktok/callback");
-    const scope = "user.info.basic,user.info.profile,user.info.stats";
+    const scope = "user.info.basic,user.info.profile,user.info.stats,video.list";
     const state = Math.random().toString(36).substring(7);
     
     const authUrl = `https://www.tiktok.com/v2/auth/authorize/?client_key=${clientKey}&scope=${scope}&response_type=code&redirect_uri=${redirectUri}&state=${state}`;
@@ -129,6 +129,7 @@ export default function AdminPanel({ initialData }: Readonly<{ initialData?: Pro
             followerCount: tiktokData.followerCount || prev.followerCount,
             followingCount: tiktokData.followingCount || prev.followingCount,
             heartCount: tiktokData.heartCount || prev.heartCount,
+            videoLinks: tiktokData.videoLinks?.length > 0 ? tiktokData.videoLinks : prev.videoLinks
           }));
           
           toast.success("Đã đồng bộ dữ liệu từ TikTok!");
