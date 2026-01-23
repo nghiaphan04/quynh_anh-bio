@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { motion } from "framer-motion";
-import { UserButton } from "@clerk/nextjs";
-import { Share2, UserPlus, Link as LinkIcon } from "lucide-react";
+import { Share2, UserPlus, Link as LinkIcon, Settings } from "lucide-react";
+import AdminPanel from "./AdminPanel";
+import { useUser, UserButton } from "@clerk/nextjs";
 
 const ActionButton = ({ href, children, className }: { href: string; children: React.ReactNode; className: string }) => {
   if (href) {
@@ -32,17 +34,24 @@ interface ProfileHeaderProps {
   messageLink: string;
   addFriendLink: string;
   shareLink: string;
+  avatarUrl?: string;
+  avatarLargeUrl?: string;
+  isVerified?: boolean;
+  allData?: any; // To pass back to AdminPanel
 }
 
 export default function ProfileHeader({ 
   bio, followerCount, followingCount, heartCount,
-  uniqueId, username, bioLink, followLink, messageLink, addFriendLink, shareLink
+  uniqueId, username, bioLink, followLink, messageLink, addFriendLink, shareLink,
+  avatarUrl, avatarLargeUrl, isVerified, allData
 }: Readonly<ProfileHeaderProps>) {
-
+  const { user } = useUser();
+  const isAdmin = user?.publicMetadata?.role === 'ADMIN';
+  
   return (
     <div className="relative flex flex-col gap-5 p-4 md:p-0 md:pt-8 max-w-[800px] mx-auto">
       <div className="fixed top-4 right-4 z-50">
-        <UserButton afterSignOutUrl="/" />
+        <UserButton />
       </div>
       <div className="flex flex-col items-center text-center md:flex-row md:items-start md:text-left gap-2 md:gap-6">
         {/* Avatar Section */}
@@ -52,13 +61,24 @@ export default function ProfileHeader({
           transition={{ duration: 0.4 }}
           className="relative shrink-0"
         >
-          <div className="w-[130px] h-[130px] md:w-[200px] md:h-[200px] rounded-full overflow-hidden border border-primary/20 mt-4">
-             <Avatar className="w-full h-full">
-              <AvatarImage src="/avt_1080_1080.jpeg" alt="Profile" className="object-cover" />
-              <AvatarFallback className="bg-muted text-foreground text-3xl md:text-5xl font-bold">
-                QA
-              </AvatarFallback>
-            </Avatar>
+          <div className="w-[110px] h-[110px] md:w-[116px] md:h-[116px] mt-4 relative">
+             <div className="w-full h-full rounded-full overflow-hidden">
+               <Avatar className="w-full h-full">
+                <AvatarImage src={avatarLargeUrl || avatarUrl || "/avt_1080_1080.jpeg"} alt="Profile" className="object-cover" />
+                <AvatarFallback className="bg-muted text-foreground text-3xl font-bold">
+                  {uniqueId?.substring(0, 2).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+             </div>
+            
+            {/* Admin Gear Icon Trigger - Always visible and not clipped */}
+            {isAdmin && (
+              <AdminPanel initialData={allData}>
+                <button className="absolute bottom-0 right-0 w-9 h-9 bg-black/60 hover:bg-black/80 transition-colors flex items-center justify-center cursor-pointer rounded-full border-2 border-background z-10">
+                  <Settings className="w-5 h-5 text-white" />
+                </button>
+              </AdminPanel>
+            )}
           </div>
         </motion.div>
 
@@ -66,8 +86,16 @@ export default function ProfileHeader({
         <div className="flex-1 space-y-3 md:space-y-4 pt-1 md:pt-2 w-full">
           <div className="space-y-1">
             <h1 className="text-[20px] leading-[26px] md:text-[32px] md:leading-[38px] font-bold flex flex-col md:flex-row items-center gap-1 md:gap-2 justify-center md:justify-start">
-              {uniqueId}
-              <span className="text-sm md:text-lg font-normal text-muted-foreground flex items-center gap-1">
+              <span className="flex items-center gap-1.5 cursor-pointer hover:underline">
+                {uniqueId}
+                {isVerified && (
+                  <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-[18px] h-[18px] md:w-[22px] md:h-[22px]">
+                    <circle cx="24" cy="24" r="20" fill="#20D5EC"/>
+                    <path d="M14 24L21 31L34 18" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )}
+              </span>
+              <span className="text-sm md:text-base font-normal text-muted-foreground flex items-center gap-1">
                  {username}
               </span>
             </h1>

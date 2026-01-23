@@ -43,28 +43,29 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { 
       bio, followerCount, followingCount, heartCount, videoLinks, customLinks,
-      uniqueId, username, bioLink, followLink, messageLink, addFriendLink, shareLink, pinnedVideos
+      uniqueId, username, bioLink, followLink, messageLink, addFriendLink, shareLink, pinnedVideos,
+      openId, unionId, avatarUrl, avatarUrl100, avatarLargeUrl, isVerified, videoCount, profileDeepLink, rawVideos
     } = body;
     
     // Check if a profile exists to decide on update vs create logic
     // Since we only want one main profile, we can fetch the first one.
     const existingProfile = await prisma.profile.findFirst();
 
+    const profileData = { 
+      bio, followerCount, followingCount, heartCount, videoLinks, customLinks,
+      uniqueId, username, bioLink, followLink, messageLink, addFriendLink, shareLink, pinnedVideos,
+      openId, unionId, avatarUrl, avatarUrl100, avatarLargeUrl, isVerified, videoCount, profileDeepLink, rawVideos
+    };
+
     let profile;
     if (existingProfile) {
       profile = await prisma.profile.update({
         where: { id: existingProfile.id },
-        data: { 
-          bio, followerCount, followingCount, heartCount, videoLinks, customLinks,
-          uniqueId, username, bioLink, followLink, messageLink, addFriendLink, shareLink, pinnedVideos
-        } as any,
+        data: profileData as any,
       });
     } else {
       profile = await prisma.profile.create({
-        data: { 
-          bio, followerCount, followingCount, heartCount, videoLinks, customLinks,
-          uniqueId, username, bioLink, followLink, messageLink, addFriendLink, shareLink, pinnedVideos
-        } as any,
+        data: profileData as any,
       });
     }
     

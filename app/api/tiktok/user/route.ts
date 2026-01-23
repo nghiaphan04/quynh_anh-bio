@@ -49,8 +49,6 @@ export async function GET() {
         status: profileResponse.status 
       }, { status: 500 });
     }
-
-    // 2. Fetch Video List
     let videoLinks: string[] = [];
     let detailedVideos: any[] = [];
     try {
@@ -84,12 +82,21 @@ export async function GET() {
       const user = profileData.data.user;
       const finalData = {
         username: user.display_name,
+        uniqueId: user.username,
         bio: user.bio_description,
         followerCount: formatCount(user.follower_count),
         followingCount: formatCount(user.following_count),
         heartCount: formatCount(user.likes_count),
+        avatarUrl: user.avatar_url,
+        avatarUrl100: user.avatar_url_100,
+        avatarLargeUrl: user.avatar_large_url,
+        isVerified: user.is_verified,
+        videoCount: user.video_count,
+        profileDeepLink: user.profile_deep_link,
+        openId: user.open_id,
+        unionId: user.union_id,
         videoLinks: videoLinks,
-        rawVideos: detailedVideos // Including raw data in the response for the user to see in logs
+        rawVideos: detailedVideos 
       };
       
       console.log("Final Merged TikTok Data:", JSON.stringify(finalData, null, 2));

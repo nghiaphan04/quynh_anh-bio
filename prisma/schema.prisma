@@ -22,4 +22,15 @@ model Profile {
   uniqueId       String   @default("hanadan_yoko")
   username       String   @default("𐙚𝘵𝘴𝘶𝘵𝘴𝘶.𝘺𝘰𝘬𝘰⋆. ̊")
   bioLink        String   @default("https://www.tiktok.com/link/v2?aid=1988&lang=vi-VN&scene=bio_url&target=https%3A%2F%2Fbato.si%2Ftitle%2F18679-hana-yori-dango")
+  
+  // New TikTok API v2 Fields
+  openId          String?
+  unionId         String?
+  avatarUrl       String?
+  avatarUrl100    String?
+  avatarLargeUrl  String?
+  isVerified      Boolean  @default(false)
+  videoCount      Int      @default(0)
+  profileDeepLink String?
+  rawVideos       Json     @default("[]")
 }

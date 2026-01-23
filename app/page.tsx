@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import ProfileHeader from "@/components/ProfileHeader";
-import AdminPanel from "@/components/AdminPanel";
 import ProfileTabs from "@/components/ProfileTabs";
 import prisma from "@/lib/prisma";
 import { SignedOut, SignInButton } from "@clerk/nextjs";
@@ -22,7 +22,8 @@ async function getProfile() {
       messageLink: "",
       addFriendLink: "",
       shareLink: "",
-      pinnedVideos: []
+      pinnedVideos: [],
+      rawVideos: []
     };
   }
 
@@ -40,7 +41,18 @@ async function getProfile() {
     messageLink: profile.messageLink || "",
     addFriendLink: profile.addFriendLink || "",
     shareLink: profile.shareLink || "",
-    pinnedVideos: profile.pinnedVideos || []
+    pinnedVideos: profile.pinnedVideos || [],
+    
+    // New Fields
+    openId: profile.openId,
+    unionId: profile.unionId,
+    avatarUrl: profile.avatarUrl,
+    avatarUrl100: profile.avatarUrl100,
+    avatarLargeUrl: profile.avatarLargeUrl,
+    isVerified: profile.isVerified || false,
+    videoCount: profile.videoCount || 0,
+    profileDeepLink: profile.profileDeepLink,
+    rawVideos: (profile.rawVideos as any[]) || []
   };
 }
 
@@ -76,18 +88,20 @@ export default async function Home() {
             messageLink={data.messageLink}
             addFriendLink={data.addFriendLink}
             shareLink={data.shareLink}
+            avatarUrl={data.avatarUrl}
+            avatarLargeUrl={data.avatarLargeUrl}
+            isVerified={data.isVerified}
+            allData={data}
           />
           
           <ProfileTabs 
             videoLinks={data.videoLinks}
             customLinks={data.customLinks}
             pinnedVideos={data.pinnedVideos}
+            rawVideos={data.rawVideos || []}
           />
         </div>
       </div>
-      
-      {/* Admin Panel (Dialog based) */}
-      <AdminPanel initialData={data} />
     </main>
   );
 }
